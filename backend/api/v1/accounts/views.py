@@ -2,10 +2,8 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework import viewsets, status, permissions
 
-
 from .serializers import CustomUserSerializer
 from apps.accounts.models import CustomUser
-
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):

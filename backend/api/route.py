@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from api.v1.accounts.views import CustomUserViewSet
-from api.auth.views import RegistrationView
+from api.auth.views import RegistrationView, AuthenticationView
 
 router = DefaultRouter(trailing_slash=False)
 urlpatterns = router.urls
@@ -22,8 +22,9 @@ urlpatterns.extend(
         #         }
         #     ),
         # ),
-# Registration
+# Authentication/Authorization
         path("register/", RegistrationView.as_view(), name="register"),
+        path("login/", AuthenticationView.as_view({'post': 'login'}), name="login"),
 
 
     ]
