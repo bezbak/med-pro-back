@@ -9,7 +9,7 @@ from .manager import UserManager
 from .validation import PhoneNumberValidator
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number_validator = PhoneNumberValidator()
 
     email = models.EmailField(_('email address'), unique=True)
