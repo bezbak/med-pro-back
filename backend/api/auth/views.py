@@ -71,3 +71,29 @@ class AuthenticationView(viewsets.ViewSet):
             },
             status=status.HTTP_200_OK
         )
+
+    def logout(self, request):
+        try:
+            if 'refresh_token' in request.data:
+                refresh_token = request.data['refresh_token']
+                if refresh_token:
+                    token = RefreshToken(refresh_token)
+                    token.blacklist()
+                return Response(
+                    'Logged out',
+                    status=status.HTTP_200_OK
+                )
+            else:
+                return Response(
+                    'Empty Refresh Token',
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            refresh_token = request.data["refresh_token"]
+            if refresh_token:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+
+            return Response('Logged out', status=status.HTTP_200_OK)
+
+        except TokenError:
+            raise AuthenticationFailed('Invalid token')
