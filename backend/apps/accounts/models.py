@@ -62,18 +62,31 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class PatientProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='patient_profile')
-    medical_history = models.TextField(blank=True, null=True)
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='patient_profile'
+    )
+    medical_history = models.TextField(verbose_name=_('medical history'), blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.get_full_name()}'s Patient Profile"
 
 
 class DoctorProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='doctor_profile')
-    specialization = models.CharField(max_length=255)
-    experience = models.IntegerField()
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='doctor_profile'
+    )
+    specialization = models.CharField(max_length=255, verbose_name=_('specialization'),)
+    experience = models.IntegerField(verbose_name=_('experience'))
+    rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        default=0.0,
+        verbose_name=_('rating')
+    )
 
     def __str__(self):
         return f"Dr. {self.user.get_full_name()}'s Profile"
