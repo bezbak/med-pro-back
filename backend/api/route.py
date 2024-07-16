@@ -17,7 +17,5 @@ urlpatterns.extend(
 # User
         path("users/", CustomUserViewSet.as_view({"get": "list"})),
         path("users/profile/", CustomUserViewSet.as_view({"get": "user_profile"})),
-
-
     ]
 )

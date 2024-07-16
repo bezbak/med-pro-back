@@ -10,6 +10,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg',
+]
+
+CUSTOM_APPS = [
+    'apps.accounts',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -17,11 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
-
-    'apps.accounts'
+    *THIRD_PARTY_APPS,
+    *CUSTOM_APPS
 ]
 
 MIDDLEWARE = [
