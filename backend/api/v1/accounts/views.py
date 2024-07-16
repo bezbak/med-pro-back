@@ -16,8 +16,8 @@ from .serializers import (
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = (permissions.AllowAny,)    # todo: change for permission
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.AllowAny,)    # todo: change for permission
+    # permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
         operation_description="Список пользователей.",
