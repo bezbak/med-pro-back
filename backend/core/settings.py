@@ -19,6 +19,7 @@ THIRD_PARTY_APPS = [
 
 CUSTOM_APPS = [
     'apps.accounts',
+    'apps.consultations'
 ]
 
 INSTALLED_APPS = [
