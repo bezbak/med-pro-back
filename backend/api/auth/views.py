@@ -4,6 +4,9 @@ from rest_framework import generics, status, viewsets, permissions
 from rest_framework_simplejwt.exceptions import AuthenticationFailed, TokenError
 from rest_framework.response import Response
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 from api.auth.serializers import RegistrationSerializer
 from apps.accounts.models import CustomUser
 
@@ -12,6 +15,17 @@ class RegistrationView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = RegistrationSerializer
 
+    @swagger_auto_schema(
+        operation_description='Регистрация нового пользователя',
+        operation_summary='Регистрация пользователя',
+        operation_id='user_registration',
+        tags=['Authentication'],
+        responses={
+            201: openapi.Response(description="Created - Пользователь успешно зарегистрирован"),
+            400: openapi.Response(description="Bad Request - Неверные данные для регистрации"),
+        },
+    )
+    @action(detail=False, methods=['POST'], url_path='register')
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
 
@@ -42,6 +56,26 @@ class RegistrationView(generics.GenericAPIView):
 class AuthenticationView(viewsets.ViewSet):
     permission_classes = (permissions.AllowAny,)
 
+    @swagger_auto_schema(
+        operation_description='Авторизация пользователя для получения токена',
+        operation_summary='Авторизация пользователя для получения токена',
+        operation_id='login_user',
+        tags=['Authentication'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['email', 'password'],
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email пользователя'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Пароль пользователя'),
+            },
+        ),
+        responses={
+            200: openapi.Response(description="OK - Авторизация пользователя прошла успешно."),
+            400: openapi.Response(description="Bad Request - Неверный запрос."),
+            404: openapi.Response(description="Not Found - Пользователь не найден"),
+        },
+    )
+    @action(detail=False, methods=['POST'], url_path='login')
     def login(self, request, *args, **kwargs):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -72,6 +106,17 @@ class AuthenticationView(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
+    @swagger_auto_schema(
+        operation_description='Выход для удаления токена',
+        operation_summary='Выход для удаления токена',
+        operation_id='logout_user',
+        tags=['Authentication'],
+        responses={
+            201: openapi.Response(description="OK - Выход пользователя прошла успешно."),
+            400: openapi.Response(description="Bad Request - Неверный запрос."),
+        },
+    )
+    @action(detail=False, methods=['POST'], url_path='logout')
     def logout(self, request):
         try:
             if 'refresh_token' in request.data:

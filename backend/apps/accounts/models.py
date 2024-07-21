@@ -62,11 +62,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class PatientProfile(models.Model):
+    GENDER_CHOICES = (
+        ('M', _('Male')),
+        ('F', _('Female')),
+    )
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
         related_name='patient_profile'
     )
+    age = models.PositiveSmallIntegerField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     medical_history = models.TextField(verbose_name=_('medical history'), blank=True, null=True)
 
     def __str__(self):
