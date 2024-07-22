@@ -6,7 +6,8 @@ from .yasg import urlpatterns as doc_ts
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.route')),
+    path('api/v1/', include('api.route')),
+    path('api/v1/swagger/', include(doc_ts))
 ]
 
 urlpatterns += doc_ts

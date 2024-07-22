@@ -25,7 +25,7 @@ class RegistrationView(generics.GenericAPIView):
             400: openapi.Response(description="Bad Request - Неверные данные для регистрации"),
         },
     )
-    @action(detail=False, methods=['POST'], url_path='register')
+    # @action(detail=False, methods=['POST'])
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
 
@@ -75,7 +75,7 @@ class AuthenticationView(viewsets.ViewSet):
             404: openapi.Response(description="Not Found - Пользователь не найден"),
         },
     )
-    @action(detail=False, methods=['POST'], url_path='login')
+    # @action(detail=False, methods=['POST'], url_path='login')
     def login(self, request, *args, **kwargs):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -116,7 +116,7 @@ class AuthenticationView(viewsets.ViewSet):
             400: openapi.Response(description="Bad Request - Неверный запрос."),
         },
     )
-    @action(detail=False, methods=['POST'], url_path='logout')
+    # @action(detail=False, methods=['POST'], url_path='logout')
     def logout(self, request):
         try:
             if 'refresh_token' in request.data:
