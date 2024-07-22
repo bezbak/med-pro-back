@@ -7,6 +7,9 @@ from api.auth.views import RegistrationView, AuthenticationView
 router = DefaultRouter(trailing_slash=False)
 urlpatterns = router.urls
 
+router.register(r'users/', CustomUserViewSet, basename='user')
+
+
 
 urlpatterns.extend(
     [
