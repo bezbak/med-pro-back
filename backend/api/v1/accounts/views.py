@@ -19,32 +19,32 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)    # todo: change for permission
     # permission_classes = [permissions.IsAuthenticated]
 
-    @swagger_auto_schema(
-        operation_description="Список пользователей.",
-        operation_summary="Список пользователей.",
-        operation_id="list_users",
-        tags=["Пользователь(User)"],
-        responses={
-            200: openapi.Response(description="OK - Список пользователей получен успешно."),
-            401: openapi.Response(description="Ошибка аутентификации"),
-        },
-    )
-    @action(detail=True, methods=['GET'], url_path='list')
+    # @swagger_auto_schema(
+    #     operation_description="Список пользователей.",
+    #     operation_summary="Список пользователей.",
+    #     operation_id="list_users",
+    #     tags=["Пользователь(User)"],
+    #     responses={
+    #         200: openapi.Response(description="OK - Список пользователей получен успешно."),
+    #         401: openapi.Response(description="Ошибка аутентификации"),
+    #     },
+    # )
+    # @action(detail=False, methods=['GET'])
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    @swagger_auto_schema(
-        operation_description="Получить профиль.",
-        operation_summary="Получить профиль.",
-        operation_id="detail_user",
-        tags=["Пользователь(User)"],
-        responses={
-            200: openapi.Response(description="OK - Профиль пользователя получено успешно."),
-            401: openapi.Response(description="Ошибка аутентификации"),
-            404: openapi.Response(description="Not Found - Пользователь не найден"),
-        },
-    )
-    @action(detail=False, methods=['GET'], url_path='user-profile')
+    # @swagger_auto_schema(
+    #     operation_description="Получить профиль.",
+    #     operation_summary="Получить профиль.",
+    #     operation_id="detail_user",
+    #     tags=["Пользователь(User)"],
+    #     responses={
+    #         200: openapi.Response(description="OK - Профиль пользователя получено успешно."),
+    #         401: openapi.Response(description="Ошибка аутентификации"),
+    #         404: openapi.Response(description="Not Found - Пользователь не найден"),
+    #     },
+    # )
+    @action(detail=False, methods=['GET'])
     def user_profile(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user_serializer = UserSerializer(request.user)
