@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Consultation
+from apps.consultations.models import Consultation
+
 
 class ConsultationSerializer(serializers.ModelSerializer):
     class Meta:
