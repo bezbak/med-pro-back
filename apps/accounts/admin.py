@@ -7,7 +7,13 @@ from django.contrib.auth.forms import (
 )
 from django.utils.translation import gettext_lazy as _
 
-from .models import CustomUser
+from .models import CustomUser, DoctorProfile
+# @admin.register(CustomUser)
+
+@admin.register(DoctorProfile)
+class DoctorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'specialty', 'experience_years', 'rating')
+    search_fields = ('name', 'specialty')
 
 
 @admin.register(CustomUser)
