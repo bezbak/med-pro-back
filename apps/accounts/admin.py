@@ -7,9 +7,10 @@ from django.contrib.auth.forms import (
 )
 from django.utils.translation import gettext_lazy as _
 
-from .models import CustomUser, DoctorProfile
+from .models import CustomUser, DoctorProfile,Category
 # @admin.register(CustomUser)
 
+admin.site.register(Category)
 @admin.register(DoctorProfile)
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('name', 'specialty', 'experience_years', 'rating')

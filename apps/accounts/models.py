@@ -62,6 +62,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.get_full_name()
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
 class PatientProfile(models.Model):
     GENDER_CHOICES = (
@@ -79,13 +82,28 @@ class PatientProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.get_full_name()}'s Patient Profile"
+    
+    class Meta:
+        verbose_name = 'Пациент'
+        verbose_name_plural = 'Пациенты'
+        
 
-
+class Category(models.Model):
+    name = models.CharField(verbose_name='Название услуги', max_length=255)
+    image = models.ImageField(verbose_name='Фото услуги', upload_to='category/')
+    
+    def __str__(self):
+        return f"{self.name}"
+    
+    class Meta:
+        verbose_name = 'Услуга'
+        verbose_name_plural = 'Услуги'
+    
 class DoctorProfile(models.Model):
     email = models.EmailField(_('email address'), unique=True)
     password = models.CharField(verbose_name="Пароль", max_length=255)
     name = models.CharField(max_length=255, verbose_name="Имя")
-    specialty = models.CharField(max_length=100, verbose_name="Специализация")
+    specialty = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='doctors', verbose_name="Специализация")
     experience_years = models.PositiveIntegerField(verbose_name="Опыт (лет)")
     rating = models.FloatField(verbose_name="Рейтинг")
     reviews_count = models.PositiveIntegerField(verbose_name="Количество отзывов")
