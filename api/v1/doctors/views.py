@@ -1,11 +1,10 @@
 from rest_framework import filters
 from rest_framework.views import APIView
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet  
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
 
 # Create your views here.
 from .serializers import DoctorSerializer, CategorySerializer

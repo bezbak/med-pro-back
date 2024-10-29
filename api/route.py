@@ -14,11 +14,11 @@ router = DefaultRouter(trailing_slash=False)
 
 
 # router.register(r'register', RegistrationView, basename='register'),
-router.register(r'authentication/', AuthenticationView, basename='authentication')
-router.register(r'profile/', CustomUserViewSet, basename='profile')
-router.register(r'users/', CustomUserViewSet, basename='users')
-router.register(r'consultations/', ConsultationViewSet, basename='consultations')
-router.register(r'doctors/', DoctorAPIView, basename='doctors')
+router.register(r'authentication', AuthenticationView, basename='authentication')
+router.register(r'profile', CustomUserViewSet, basename='profile')
+router.register(r'users', CustomUserViewSet, basename='users')
+router.register(r'consultations', ConsultationViewSet, basename='consultations')
+router.register(r'doctors', DoctorAPIView, basename='doctors')
 
 urlpatterns = [
         path("register/", RegistrationView.as_view(), name="register"),
