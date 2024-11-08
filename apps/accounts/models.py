@@ -29,9 +29,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=13,
         help_text=_("Обязательное поле. Должно содержать от 10 цифр (0700 123 456) до 12 цифр (996 700 123 456"),
         validators=[phone_number_validator],
-        error_messages={
-            "unique": _("Пользователь с таким номером телефона уже существует."),
-        },
     )
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
@@ -121,3 +118,31 @@ class DoctorProfile(models.Model):
     class Meta:
         verbose_name = 'Доктор'
         verbose_name_plural = 'Докторы'
+
+class Reviews(models.Model):
+    text = models.TextField(
+        verbose_name='Текст отзыва'
+    )
+    doctor = models.ForeignKey(
+        DoctorProfile,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name='Профиль доктора'
+    )
+    patient = models.ForeignKey(
+        PatientProfile,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name='Пациент'
+    )
+    stars = models.SmallIntegerField(
+        verbose_name='Колличество звёзд',
+        max_length=1
+    )
+    
+    def __str__(self):
+        return f"{self.patient.user.first_name} - {self.doctor.name}"
+    
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'

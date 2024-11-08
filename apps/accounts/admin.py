@@ -7,15 +7,17 @@ from django.contrib.auth.forms import (
 )
 from django.utils.translation import gettext_lazy as _
 
-from .models import CustomUser, DoctorProfile,Category
+from .models import CustomUser, DoctorProfile,Category, PatientProfile, Reviews
 # @admin.register(CustomUser)
 
 admin.site.register(Category)
+admin.site.register(Reviews)
+admin.site.register(PatientProfile)
 @admin.register(DoctorProfile)
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('name', 'specialty', 'experience_years', 'rating')
     search_fields = ('name', 'specialty')
-
+    
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -29,7 +31,8 @@ class CustomUserAdmin(admin.ModelAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
-                    "email"
+                    "email",
+                    'profile'
                 )
             }
         ),
@@ -66,10 +69,10 @@ class CustomUserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ("phone_number", "is_superuser", "is_staff", "is_doctor")
+    list_display = ("email", "is_superuser", "is_staff", "is_doctor")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
-    search_fields = ("phone_number", "first_name", "last_name")
-    ordering = ("phone_number",)
+    search_fields = ("email", "first_name", "last_name")
+    ordering = ("email",)
     filter_horizontal = (
         "groups",
         "user_permissions",
