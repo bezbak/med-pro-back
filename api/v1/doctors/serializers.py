@@ -16,11 +16,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
         
 class DoctorSerializer(serializers.ModelSerializer):
     specialty = CategorySerializer()
+    user = CustomUserSerializer(many=False)
     class Meta:
         model = DoctorProfile
         fields = [
-            'id', 'name', 'specialty', 'experience_years', 'rating',
-            'reviews_count', 'consultation_cost', 'description', 'image',
+            'id', 'user', 'specialty', 'experience_years', 'rating',
+            'reviews_count', 'consultation_cost', 'description',
             'education', 'treatment_approach', 'experience', 'skills'
         ]
         

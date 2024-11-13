@@ -6,11 +6,9 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
 
 from .manager import UserManager
-from .validation import PhoneNumberValidator
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    phone_number_validator = PhoneNumberValidator()
 
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
@@ -27,8 +25,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True,
         max_length=13,
-        help_text=_("Обязательное поле. Должно содержать от 10 цифр (0700 123 456) до 12 цифр (996 700 123 456"),
-        validators=[phone_number_validator],
     )
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
@@ -48,8 +44,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
         constraints = [
             models.UniqueConstraint(
-                fields=["phone_number"],
-                name="unique_inn_phone",
+                fields=["email"],
+                name="unique_inn_email",
             )
         ]
 
@@ -97,16 +93,17 @@ class Category(models.Model):
         verbose_name_plural = 'Услуги'
     
 class DoctorProfile(models.Model):
-    email = models.EmailField(_('email address'), unique=True)
-    password = models.CharField(verbose_name="Пароль", max_length=255)
-    name = models.CharField(max_length=255, verbose_name="Имя")
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='doctor_profile'
+    )
     specialty = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='doctors', verbose_name="Специализация")
     experience_years = models.PositiveIntegerField(verbose_name="Опыт (лет)")
     rating = models.FloatField(verbose_name="Рейтинг")
     reviews_count = models.PositiveIntegerField(verbose_name="Количество отзывов")
     consultation_cost = models.CharField(max_length=50, verbose_name="Стоимость консультации")
     description = models.TextField(verbose_name="Описание врача")
-    image = models.ImageField(upload_to='doctors/', verbose_name="Фото врача")
     education = models.TextField(verbose_name="Образование и квалификации")
     treatment_approach = models.TextField(verbose_name="Подход к лечению")
     experience = models.TextField(verbose_name="Опыт работы")
