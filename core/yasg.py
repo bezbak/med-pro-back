@@ -9,7 +9,6 @@ from rest_framework import routers
 # from api.v1.accounts.views import
 
 from api.v1.accounts.views import CustomUserViewSet
-from api.auth.views import RegistrationView, AuthenticationView
 
 
 schema_view = get_schema_view(

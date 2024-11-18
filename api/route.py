@@ -6,7 +6,8 @@ from api.v1.doctors.views import CategoryListAPIView, DoctorAPIView, ReviewsAPIV
 from api.v1.consultations.views import ConsultationViewSet
 from api.auth.views import (
     RegistrationView,
-    AuthenticationView
+    LoginView,
+    LogoutView
 )
 
 
@@ -14,7 +15,7 @@ router = DefaultRouter(trailing_slash=False)
 
 
 # router.register(r'register', RegistrationView, basename='register'),
-router.register(r'authentication', AuthenticationView, basename='authentication')
+# router.register(r'authentication', AuthenticationView, basename='authentication')
 router.register(r'profile', CustomUserViewSet, basename='profile')
 router.register(r'users', CustomUserViewSet, basename='users')
 router.register(r'consultations', ConsultationViewSet, basename='consultations')
@@ -23,6 +24,8 @@ router.register(r'reviews/', ReviewsAPIView, basename='reviews')
 
 urlpatterns = [
         path("register/", RegistrationView.as_view(), name="register"),
+        path("login/", LoginView.as_view(), name="login"),
+        path("logout/", LogoutView.as_view(), name="logout"),
         path('categories/', CategoryListAPIView.as_view(), name='category_list'),
     ]
 

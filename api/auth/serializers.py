@@ -3,6 +3,10 @@ from rest_framework import serializers
 from apps.accounts.models import CustomUser, PatientProfile, DoctorProfile
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
@@ -19,10 +23,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'email',
-            'phone_number',
             'password',
             'password2',
             'last_name',
+            'first_name',
             'is_doctor',
         ]
 

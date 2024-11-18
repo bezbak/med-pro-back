@@ -25,5 +25,5 @@ class ReviewsAPIView(GenericViewSet,ListModelMixin, CreateModelMixin):
     queryset = Reviews.objects.all()
     serializer_class = ReviewsSerializer
     filter_backends = [DjangoFilterBackend,]
-    filterset_fields = ('doctor',)
+    filterset_fields = ('doctor','patient')
     
