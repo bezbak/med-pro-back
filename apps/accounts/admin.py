@@ -43,6 +43,7 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "is_active",
                     "is_staff",
+                    "is_doctor",
                     "is_superuser",
                     "groups",
                     "user_permissions",

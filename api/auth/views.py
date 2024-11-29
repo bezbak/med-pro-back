@@ -96,7 +96,7 @@ class LoginView(generics.GenericAPIView):
 
         access_token = AccessToken.for_user(user)
         refresh_token = RefreshToken.for_user(user)
-        user_id = user.pk
+        user_id = PatientProfile.objects.get(user=user).pk
         return Response(
             data={
                 "access_token": str(access_token),

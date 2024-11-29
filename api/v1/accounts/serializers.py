@@ -5,7 +5,7 @@ from apps.accounts.models import (
     PatientProfile,
     DoctorProfile
 )
-
+from api.v1.consultations.serializers import ConsultationSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,11 +20,12 @@ class UserSerializer(serializers.ModelSerializer):
             'date_joined'
         ]
 
-
 class PatientProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+    consultations = ConsultationSerializer(many=True)
     class Meta:
         model = PatientProfile
-        fields = ['medical_history']
+        fields = ['medical_history', 'user', 'consultations']
 
 
 class DoctorProfileSerializer(serializers.ModelSerializer):

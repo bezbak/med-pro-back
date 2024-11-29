@@ -15,8 +15,10 @@ class Consultation(models.Model):
         related_name='doctor_consultations',
         on_delete=models.CASCADE
     )
-
-    date_time = models.DateTimeField(verbose_name=_('date and time'))
+    date = models.DateField(verbose_name='Дата записи', blank=True, null=True)
+    time = models.TimeField(verbose_name='Время записи', blank=True, null=True)
+    consul_type = models.CharField(verbose_name="Тип консультации", max_length=250)
+    wh_number = models.CharField(verbose_name="Номер WhatsApp", max_length=15)
     status = models.CharField(
         max_length=10,
         choices=ConsultationStatus.CHOICES,
@@ -28,13 +30,13 @@ class Consultation(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
 
     class Meta:
-        ordering = ['-date_time']
+        ordering = ['-date']
         verbose_name = _('consultation')
         verbose_name_plural = _('consultations')
 
     def __str__(self):
         return (f'Consultation between {self.patient.user.get_full_name()} and \
-                Dr. {self.doctor.user.get_full_name()} on {self.date_time}')
+                Dr. {self.doctor.user.get_full_name()} on {self.date} {self.time}')
 
 
 

@@ -67,7 +67,7 @@ class PatientProfile(models.Model):
     medical_history = models.TextField(verbose_name=_('medical history'), blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.get_full_name()}'s Patient Profile"
+        return f"{self.pk} {self.user.get_full_name()}'s Patient Profile"
     
     class Meta:
         verbose_name = 'Пациент'

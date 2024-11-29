@@ -73,3 +73,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
                 {'detail': 'You are not logged in.'},
                 status=status.HTTP_403_FORBIDDEN
             )
+            
+class PatientViewSet(viewsets.ModelViewSet):
+    queryset = PatientProfile.objects.all()
+    serializer_class = PatientProfileSerializer
+    permission_classes = (permissions.IsAuthenticated,)  

@@ -11,4 +11,4 @@ class ConsultationViewSet(viewsets.ModelViewSet):
 
 
     def perform_create(self, serializer):
-        serializer.save(patient=self.request.user.patientprofile)
+        serializer.save(patient=self.request.user.patient_profile)

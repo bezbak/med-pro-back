@@ -7,14 +7,16 @@ class ConsultationAdmin(admin.ModelAdmin):
     list_display = [
         'patient',
         'doctor',
-        'date_time',
+        'date',
+        'time',
         'status',
         'created_at',
         'updated_at'
     ]
     list_filter = [
         'status',
-        'date_time'
+        'date',
+        'time'
     ]
     search_fields = [
         'patient__user__first_name',
