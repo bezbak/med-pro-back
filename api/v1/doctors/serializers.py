@@ -32,7 +32,12 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class ReviewsSerializer(serializers.ModelSerializer):
-    patient = PatientSerializer(many = False)
+    patient = PatientSerializer(many = False, read_only = True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=PatientProfile.objects.all(),
+        source='patient',
+        write_only=True
+    )
     class Meta:
         model = Reviews
-        fields = '__all__'
+        fields = ['id', 'patient', 'patient_id', 'text', 'stars', 'doctor']

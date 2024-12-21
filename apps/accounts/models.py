@@ -131,7 +131,11 @@ class Reviews(models.Model):
     )
     stars = models.SmallIntegerField(
         verbose_name='Колличество звёзд',
-        max_length=1
+        max_length=1,
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(0)
+        ]
     )
     
     def __str__(self):

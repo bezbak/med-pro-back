@@ -14,7 +14,7 @@ class DoctorAPIView(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     queryset = DoctorProfile.objects.all()
     serializer_class = DoctorSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
-    search_fields = ['name', 'description']
+    search_fields = ['user__first_name','user__last_name', 'description', 'specialty__name']
     filterset_fields = ('specialty',)
     
 class CategoryListAPIView(ListAPIView):
