@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from api.v1.accounts.views import CustomUserViewSet, PatientViewSet
 from api.v1.doctors.views import CategoryListAPIView, DoctorAPIView, ReviewsAPIView
-from api.v1.consultations.views import ConsultationViewSet
+from api.v1.consultations.views import ConsultationViewSet,DoctorScheduleAPIView
 from api.auth.views import (
     RegistrationView,
     LoginView,
@@ -28,6 +28,7 @@ urlpatterns = [
         path("login/", LoginView.as_view(), name="login"),
         path("logout/", LogoutView.as_view(), name="logout"),
         path('categories/', CategoryListAPIView.as_view(), name='category_list'),
+        path('shedule/<int:doctor_id>/', DoctorScheduleAPIView.as_view(), name='shedule_list'),
     ]
 
 urlpatterns += router.urls
