@@ -6,11 +6,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Q
 from collections import defaultdict
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class ConsultationViewSet(viewsets.ModelViewSet):
     queryset = Consultation.objects.all()
     serializer_class = ConsultationSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ('doctor',)
+    
 
 
     def perform_create(self, serializer):

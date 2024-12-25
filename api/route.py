@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from api.v1.accounts.views import CustomUserViewSet, PatientViewSet
-from api.v1.doctors.views import CategoryListAPIView, DoctorAPIView, ReviewsAPIView
+from api.v1.doctors.views import CategoryListAPIView, DoctorAPIView, ReviewsAPIView,FavoritesAPIView
 from api.v1.consultations.views import ConsultationViewSet,DoctorScheduleAPIView
 from api.auth.views import (
     RegistrationView,
@@ -21,6 +21,7 @@ router.register(r'users', CustomUserViewSet, basename='users')
 router.register(r'consultations', ConsultationViewSet, basename='consultations')
 router.register(r'doctors', DoctorAPIView, basename='doctors')
 router.register(r'reviews/', ReviewsAPIView, basename='reviews')
+router.register(r'favorites/', FavoritesAPIView, basename='favorites')
 router.register(r'patients', PatientViewSet, basename='patients')
 
 urlpatterns = [

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from apps.accounts.models import DoctorProfile, Category, Reviews, PatientProfile, CustomUser
+from apps.accounts.models import DoctorProfile, Category, Reviews, PatientProfile, CustomUser, Favorites
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,3 +42,16 @@ class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviews
         fields = ['id', 'patient', 'patient_id', 'text', 'stars', 'doctor']
+        
+
+class FavoritesSerializer(serializers.ModelSerializer):
+    doctor = DoctorSerializer(many= False, read_only = True)
+    
+    doctor_id = serializers.PrimaryKeyRelatedField(
+        queryset=PatientProfile.objects.all(),
+        source='patient',
+        write_only=True
+    )
+    class Meta:
+        model = Favorites
+        fields = ['id', 'patient', 'doctor_id', 'doctor']

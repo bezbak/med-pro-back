@@ -144,3 +144,24 @@ class Reviews(models.Model):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
+        
+class Favorites(models.Model):
+    patient = models.ForeignKey(
+        PatientProfile,
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='Пациент'
+    )
+    doctor = models.ForeignKey(
+        DoctorProfile,
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='Профиль доктора'
+    )
+    
+    def __str__(self):
+        return f"Избранные {self.patient.user.first_name} - {self.doctor.user.first_name}"
+    
+    class Meta:
+        verbose_name = 'Избранные'
+        verbose_name_plural = 'Избранные'

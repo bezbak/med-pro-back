@@ -8,7 +8,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 from api.auth.serializers import RegistrationSerializer,LoginSerializer
-from apps.accounts.models import CustomUser, PatientProfile
+from apps.accounts.models import CustomUser, PatientProfile, DoctorProfile
 
 
 class RegistrationView(generics.GenericAPIView):
@@ -57,7 +57,8 @@ class RegistrationView(generics.GenericAPIView):
 
 class LoginView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
-    serializer_class = LoginSerializer 
+    serializer_class = LoginSerializer
+
     @swagger_auto_schema(
         operation_description='Авторизация пользователя для получения токена',
         operation_summary='Авторизация пользователя для получения токена',
@@ -80,33 +81,40 @@ class LoginView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
         password = request.data.get("password")
+        
         try:
             user = CustomUser.objects.get(email=email)
         except CustomUser.DoesNotExist:
-            return Response(
-                'User does not exist',
-                status=status.HTTP_404_NOT_FOUND
-            )
+            return Response('User does not exist', status=status.HTTP_404_NOT_FOUND)
 
         if not user.check_password(password):
-            return Response(
-                'Incorrect password',
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response('Incorrect password', status=status.HTTP_400_BAD_REQUEST)
 
         access_token = AccessToken.for_user(user)
         refresh_token = RefreshToken.for_user(user)
-        user_id = PatientProfile.objects.get(user=user).pk
+
+        # Оптимизированный код для поиска профилей
+        user_id = 0
+        is_doctor = False
+
+        patient_profile = PatientProfile.objects.filter(user=user).first()
+        if patient_profile:
+            user_id = patient_profile.pk
+
+        doctor_profile = DoctorProfile.objects.filter(user=user).first()
+        if doctor_profile:
+            user_id = doctor_profile.pk
+            is_doctor = True
+
         return Response(
             data={
                 "access_token": str(access_token),
                 "refresh_token": str(refresh_token),
-                "user_id": user_id
+                "user_id": user_id,
+                "is_doctor": is_doctor,
             },
             status=status.HTTP_200_OK
         )
-
-
 class LogoutView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
 

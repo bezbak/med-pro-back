@@ -3,8 +3,7 @@ from rest_framework import serializers
 from apps.accounts.models import (
     CustomUser,
     PatientProfile,
-    DoctorProfile,
-    Reviews
+    DoctorProfile
 )
 from api.v1.consultations.serializers import ConsultationSerializer
 
