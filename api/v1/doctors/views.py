@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet  
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
@@ -27,9 +27,10 @@ class ReviewsAPIView(GenericViewSet,ListModelMixin, CreateModelMixin):
     filter_backends = [DjangoFilterBackend,]
     filterset_fields = ('doctor','patient')
     
-class FavoritesAPIView(GenericViewSet,ListModelMixin, CreateModelMixin):
+class FavoritesAPIView(GenericViewSet,ListModelMixin, CreateModelMixin,DestroyModelMixin, RetrieveModelMixin):
     queryset = Favorites.objects.all()
     serializer_class = FavoritesSerializer
+    permission_classes = [IsAuthenticated,]
     filter_backends = [DjangoFilterBackend,]
     filterset_fields = ('doctor','patient')
     

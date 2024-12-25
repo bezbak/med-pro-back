@@ -115,6 +115,7 @@ class LoginView(generics.GenericAPIView):
             },
             status=status.HTTP_200_OK
         )
+        
 class LogoutView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
 

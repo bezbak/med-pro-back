@@ -48,8 +48,8 @@ class FavoritesSerializer(serializers.ModelSerializer):
     doctor = DoctorSerializer(many= False, read_only = True)
     
     doctor_id = serializers.PrimaryKeyRelatedField(
-        queryset=PatientProfile.objects.all(),
-        source='patient',
+        queryset=DoctorProfile.objects.all(),
+        source='doctor',
         write_only=True
     )
     class Meta:
